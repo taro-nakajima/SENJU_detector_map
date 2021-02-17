@@ -78,7 +78,7 @@ const alpha = [-22.5/180.0*Math.PI,-22.5*2/180.0*Math.PI,-22.5*3/180.0*Math.PI,-
 const L2b = [800.0, 800.0, 800.0, 800.0, 800.0, 800.0, 800.0];        //lengths of the normal vectors of the middle detector banks from the sample position (mm).
 
 const BankWidth = 256;    // in mm unit. BankHeight is equal to BankWidth
-const Bank_VGap = 58;       // vertical gap between middle and upper/lower detectors.
+const Bank_VGap = 64;       // vertical gap between middle and upper/lower detectors.
 
 
 const Porg_center =[        // for Porg_center vector, [x,y,z] : x perpendicular to ki and y(vertical), z is parallel to ki (HRC coordinates)
