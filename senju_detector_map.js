@@ -388,7 +388,7 @@ function draw_DetMap(){
     document.getElementById("phih").innerHTML="[not accessible]";
     document.getElementById("phiv").innerHTML="[not accessible]";
     document.getElementById("lambda").innerHTML="[not accessible]";
-    document.getElementById("Azimuth").innerHTML="[not accessible]";
+//    document.getElementById("Azimuth").innerHTML="[not accessible]";
     drawBraggReflection(context,Ht,Kt,Lt,isTargetHKL,showHKL);
 
 }
@@ -435,8 +435,8 @@ function drawBraggReflection(context1,H1,K1,L1,isTargetHKL1,showHKL1){
                     document.getElementById("phih").innerHTML=Math.round(phih_deg*decimal_digit)/decimal_digit;
                     document.getElementById("phiv").innerHTML=Math.round(phiv_deg*decimal_digit)/decimal_digit;
                     document.getElementById("lambda").innerHTML=Math.round(lambda*decimal_digit)/decimal_digit;
-                    const Az_angle_deg=Math.atan2(Ghkl[2],Ghkl[1])/Math.PI*180.0;
-                    document.getElementById("Azimuth").innerHTML=Math.round(Az_angle_deg*decimal_digit)/decimal_digit;
+                    //const Az_angle_deg=Math.atan2(Ghkl[2],Ghkl[1])/Math.PI*180.0;
+                    //document.getElementById("Azimuth").innerHTML=Math.round(Az_angle_deg*decimal_digit)/decimal_digit;
                     context1.arc(PosX,PosY, radius_tgt, 0, 2 * Math.PI);
                 }
                 else{
