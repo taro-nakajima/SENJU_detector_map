@@ -1,9 +1,17 @@
 <head>
 <title >Neutron Laue Diffraction Pattern Simulator for SENJU(BL18)</title>
 <link rel="stylesheet" type="text/css" href="./common.css">
-<script type="text/javascript" src="./senju_detector_map.js?20210218"></script>
+<script type="text/javascript" src="./senju_detector_map.js?20210218v2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E9MSC86L05"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'G-E9MSC86L05');
+</script>
 <meta charset="UTF-8">
 </head>
 <body onload="init_draw()">
@@ -29,6 +37,10 @@
             <td>
                 <div class="section_02">Detector map </div>
                 <canvas id="CanvasDetMap" width="800" height="380" class="box"></canvas><br />
+                Detector banks on <select id="DetBank_side" onchange="switch_DetBank_and_draw()">
+                    <option value="BL17side" selected>BL17 side</option>
+                    <option value="BL19side">BL19 side</option>
+                </select><br />
                 <br />
                 <div class="section_02">Sample orientation viewer</div>
                 <canvas id="OrientationViewer" class="box"></canvas><br />

@@ -65,30 +65,31 @@ var Omega=0;
 
 
 //parameters regarding the detector banks--------------------------------------------------
-var HD = 0;    // height of center of PSD from incident beam (mm)
-var LD = 1000;  // length of PSD (mm)
 const LB20 = 4004.0 // distance from sample to the center of high-angle detector bank
 const widthB = 1324.87 // full width of detector array for a bank
 // Max and min angles of the detectors on the equator plane.
-const BankHorAngleMin = [-31.652/180.0*Math.PI, -54.152/180.0*Math.PI, -76.652/180.0*Math.PI, -99.152/180.0*Math.PI,-121.652/180.0*Math.PI,-144.152/180.0*Math.PI,-166.652/180.0*Math.PI]; // angles of the right edge of the detector banks (rad) 
-const BankHorAngleMax = [-13.348/180.0*Math.PI, -35.848/180.0*Math.PI, -58.348/180.0*Math.PI, -80.848/180.0*Math.PI,-103.348/180.0*Math.PI,-125.848/180.0*Math.PI,-148.348/180.0*Math.PI]; // angles of the right edge of the detector banks (rad) 
+const BankHorAngleMin = [-31.652/180.0*Math.PI, -54.152/180.0*Math.PI, -76.652/180.0*Math.PI, -99.152/180.0*Math.PI,-121.652/180.0*Math.PI,-144.152/180.0*Math.PI,-166.652/180.0*Math.PI,58.348/180.0*Math.PI, 80.848/180.0*Math.PI,103.348/180.0*Math.PI,125.848/180.0*Math.PI,148.348/180.0*Math.PI]; // angles of the right edge of the detector banks (rad) 
+const BankHorAngleMax = [-13.348/180.0*Math.PI, -35.848/180.0*Math.PI, -58.348/180.0*Math.PI, -80.848/180.0*Math.PI,-103.348/180.0*Math.PI,-125.848/180.0*Math.PI,-148.348/180.0*Math.PI,76.652/180.0*Math.PI, 99.152/180.0*Math.PI,121.652/180.0*Math.PI,144.152/180.0*Math.PI,166.652/180.0*Math.PI]; // angles of the right edge of the detector banks (rad) 
+const BankNumBL19side = 5;
+const BankNumBL17side = 7;
 
 // angles between ki and normal vectors of the detector surfaces (on the horizontal plane).
-const alpha = [-22.5/180.0*Math.PI,-22.5*2/180.0*Math.PI,-22.5*3/180.0*Math.PI,-22.5*4/180.0*Math.PI,-22.5*5/180.0*Math.PI,-22.5*6/180.0*Math.PI,-22.5*7/180.0*Math.PI]       //angles between the normal vectors of the detector banks and ki (rad).
-const L2b = [800.0, 800.0, 800.0, 800.0, 800.0, 800.0, 800.0];        //lengths of the normal vectors of the middle detector banks from the sample position (mm).
+const alpha = [-22.5/180.0*Math.PI,-22.5*2/180.0*Math.PI,-22.5*3/180.0*Math.PI,-22.5*4/180.0*Math.PI,-22.5*5/180.0*Math.PI,-22.5*6/180.0*Math.PI,-22.5*7/180.0*Math.PI,22.5*3/180.0*Math.PI,22.5*4/180.0*Math.PI,22.5*5/180.0*Math.PI,22.5*6/180.0*Math.PI,22.5*7/180.0*Math.PI]       //angles between the normal vectors of the detector banks and ki (rad).
+const L2b = 800.0;        //lengths of the normal vectors of the middle detector banks from the sample position (mm).
 
 const BankWidth = 256;    // in mm unit. BankHeight is equal to BankWidth
 const Bank_VGap = 64;       // vertical gap between middle and upper/lower detectors.
 
+var DetBankSide="BL17side";
 
 const Porg_center =[        // for Porg_center vector, [x,y,z] : x perpendicular to ki and y(vertical), z is parallel to ki (HRC coordinates)
-    [L2b[0]*Math.sin(Math.PI/180.0*(-22.5)),0.0,L2b[0]*Math.cos(Math.PI/180.0*(-22.5))],    //SMBL16
-    [L2b[0]*Math.sin(Math.PI/180.0*(-22.5*2.0)),0.0,L2b[0]*Math.cos(Math.PI/180.0*(-22.5*2.0))],    //SMBL16
-    [L2b[0]*Math.sin(Math.PI/180.0*(-22.5*3.0)),0.0,L2b[0]*Math.cos(Math.PI/180.0*(-22.5*3.0))],    //SMBL16
-    [L2b[0]*Math.sin(Math.PI/180.0*(-22.5*4.0)),0.0,L2b[0]*Math.cos(Math.PI/180.0*(-22.5*4.0))],    //SMBL16
-    [L2b[0]*Math.sin(Math.PI/180.0*(-22.5*5.0)),0.0,L2b[0]*Math.cos(Math.PI/180.0*(-22.5*5.0))],    //SMBL16
-    [L2b[0]*Math.sin(Math.PI/180.0*(-22.5*6.0)),0.0,L2b[0]*Math.cos(Math.PI/180.0*(-22.5*6.0))],    //SMBL16
-    [L2b[0]*Math.sin(Math.PI/180.0*(-22.5*7.0)),0.0,L2b[0]*Math.cos(Math.PI/180.0*(-22.5*7.0))]    //SMBL16
+    [L2b*Math.sin(Math.PI/180.0*(-22.5)),0.0,L2b*Math.cos(Math.PI/180.0*(-22.5))],    //SMBL16
+    [L2b*Math.sin(Math.PI/180.0*(-22.5*2.0)),0.0,L2b*Math.cos(Math.PI/180.0*(-22.5*2.0))],    //SMBL16
+    [L2b*Math.sin(Math.PI/180.0*(-22.5*3.0)),0.0,L2b*Math.cos(Math.PI/180.0*(-22.5*3.0))],    //SMBL16
+    [L2b*Math.sin(Math.PI/180.0*(-22.5*4.0)),0.0,L2b*Math.cos(Math.PI/180.0*(-22.5*4.0))],    //SMBL16
+    [L2b*Math.sin(Math.PI/180.0*(-22.5*5.0)),0.0,L2b*Math.cos(Math.PI/180.0*(-22.5*5.0))],    //SMBL16
+    [L2b*Math.sin(Math.PI/180.0*(-22.5*6.0)),0.0,L2b*Math.cos(Math.PI/180.0*(-22.5*6.0))],    //SMBL16
+    [L2b*Math.sin(Math.PI/180.0*(-22.5*7.0)),0.0,L2b*Math.cos(Math.PI/180.0*(-22.5*7.0))]    //SMBL16
 ]
 
 //variables for 3D orientation viewer-----------------------------------------------------
@@ -123,6 +124,12 @@ function set_RefCon_and_draw(){
 function rot_and_draw(rot_ax_dir) {
     rot_Lattice(rot_ax_dir);
     showUBmatrix();
+    draw_DetMap();
+    draw_OriViewer();
+}
+
+function switch_DetBank_and_draw(){
+    DetBankSide = document.getElementById('DetBank_side').value;
     draw_DetMap();
     draw_OriViewer();
 }
@@ -291,9 +298,13 @@ function draw_DetMap(){
 
     context.font = "14px sans-serif";
 
+    let bankNumMax =BankNumBL17side;
+    if (DetBankSide=="BL19side"){
+        bankNumMax = BankNumBL19side;
+    }
 
     x_pixel_start=0;
-    for(let banknum=0;banknum<BankHorAngleMax.length;banknum++){
+    for(let banknum=0;banknum<bankNumMax;banknum++){
         //middle bank
         context.fillRect(x_pixel_start+ofst_X, canvas.height/2.0+center_ofst_Y-BankWidth/2.0*mm2Ypixel, BankWidth*mm2Xpixel, (BankWidth)*mm2Ypixel);        
         context.strokeRect(x_pixel_start+ofst_X, canvas.height/2.0+center_ofst_Y-BankWidth/2.0*mm2Ypixel, BankWidth*mm2Xpixel, (BankWidth)*mm2Ypixel);        
@@ -451,33 +462,58 @@ function drawBraggReflection(context1,H1,K1,L1,isTargetHKL1,showHKL1){
 function phihv2pixels(phih,phiv){    // convert phih to detector number
     let delta_pixels=[-999,-1];
     let bankNum=-1;
-    for(let i=0;i<BankHorAngleMin.length; i++){
-        if((phih >= BankHorAngleMin[i]) && (phih <= BankHorAngleMax[i])){
-            bankNum=i;
+    if (DetBankSide=="BL17side"){
+        for(let i=0;i<BankNumBL17side; i++){
+            if((phih >= BankHorAngleMin[i]) && (phih <= BankHorAngleMax[i])){
+                bankNum=i;
+            }
+        }
+    
+        if(bankNum>=0){
+            delta_pixels[0] = L2b*(Math.tan(alpha[bankNum]- phih))*mm2Xpixel;
+            delta_pixels[0] += BankWidth/2.0*mm2Xpixel + bankNum*((BankWidth)*mm2Xpixel+bank_gap_disp);
+            const det_Y =L2b*Math.sqrt(1.0+Math.tan(Math.abs(phih-alpha[bankNum]))**2.0)*Math.tan(phiv); // in mm 
+    
+            if((det_Y<BankWidth/2.0)&&(det_Y>-BankWidth/2.0)){
+                delta_pixels[1] = det_Y*mm2Ypixel;
+            }
+            else if((det_Y<BankWidth*3.0/2.0+Bank_VGap)&&(det_Y>BankWidth/2.0+Bank_VGap)){
+                delta_pixels[1] = (det_Y-(BankWidth/2.0+Bank_VGap))*mm2Ypixel + BankWidth/2.0*mm2Ypixel + bank_gap_disp;
+            }
+            else if((det_Y>-BankWidth*3.0/2.0-Bank_VGap)&&(det_Y<-BankWidth/2.0-Bank_VGap)){
+                delta_pixels[1] = (det_Y-(-BankWidth/2.0-Bank_VGap))*mm2Ypixel - BankWidth/2.0*mm2Ypixel - bank_gap_disp;
+            }
+            else {
+                delta_pixels[0] = -999;
+            }
         }
     }
-
-    if(bankNum>=0){
-        delta_pixels[0] = L2b[bankNum]*(Math.tan(alpha[bankNum]- phih))*mm2Xpixel;
-        delta_pixels[0] += BankWidth/2.0*mm2Xpixel + bankNum*((BankWidth)*mm2Xpixel+bank_gap_disp);
-        //delta_pixels[1] = L2b[bankNum]*Math.sqrt(1.0+Math.tan(Math.abs(phih-alpha[bankNum]))**2.0)*Math.tan(phiv)*mm2Ypixel;  
-        const det_Y =L2b[bankNum]*Math.sqrt(1.0+Math.tan(Math.abs(phih-alpha[bankNum]))**2.0)*Math.tan(phiv); // in mm 
-
-        if((det_Y<BankWidth/2.0)&&(det_Y>-BankWidth/2.0)){
-            delta_pixels[1] = det_Y*mm2Ypixel;
+    else{
+        for(let i=BankNumBL17side;i<BankNumBL17side+BankNumBL19side; i++){
+            if((phih >= BankHorAngleMin[i]) && (phih <= BankHorAngleMax[i])){
+                bankNum=i;
+            }
         }
-        else if((det_Y<BankWidth*3.0/2.0+Bank_VGap)&&(det_Y>BankWidth/2.0+Bank_VGap)){
-            delta_pixels[1] = (det_Y-(BankWidth/2.0+Bank_VGap))*mm2Ypixel + BankWidth/2.0*mm2Ypixel + bank_gap_disp;
-        }
-        else if((det_Y>-BankWidth*3.0/2.0-Bank_VGap)&&(det_Y<-BankWidth/2.0-Bank_VGap)){
-            delta_pixels[1] = (det_Y-(-BankWidth/2.0-Bank_VGap))*mm2Ypixel - BankWidth/2.0*mm2Ypixel - bank_gap_disp;
-        }
-        else {
-            delta_pixels[0] = -999;
+    
+        if(bankNum>=0){
+            delta_pixels[0] = -L2b*(Math.tan(phih-alpha[bankNum]))*mm2Xpixel;
+            delta_pixels[0] += BankWidth/2.0*mm2Xpixel + (bank_gap_disp+BankWidth*mm2Xpixel)*(4.0 - (bankNum-BankNumBL17side));
+            const det_Y =L2b*Math.sqrt(1.0+Math.tan(Math.abs(phih-alpha[bankNum]))**2.0)*Math.tan(phiv); // in mm 
+    
+            if((det_Y<BankWidth/2.0)&&(det_Y>-BankWidth/2.0)){
+                delta_pixels[1] = det_Y*mm2Ypixel;
+            }
+            else if((det_Y<BankWidth*3.0/2.0+Bank_VGap)&&(det_Y>BankWidth/2.0+Bank_VGap)){
+                delta_pixels[1] = (det_Y-(BankWidth/2.0+Bank_VGap))*mm2Ypixel + BankWidth/2.0*mm2Ypixel + bank_gap_disp;
+            }
+            else if((det_Y>-BankWidth*3.0/2.0-Bank_VGap)&&(det_Y<-BankWidth/2.0-Bank_VGap)){
+                delta_pixels[1] = (det_Y-(-BankWidth/2.0-Bank_VGap))*mm2Ypixel - BankWidth/2.0*mm2Ypixel - bank_gap_disp;
+            }
+            else {
+                delta_pixels[0] = -999;
+            }
         }
     }
-
-
 
     return delta_pixels; 
 
@@ -631,37 +667,71 @@ function draw_OriViewer(){
     //THREE.js coordinates (x3,y3,z3) 
     //transformation : x3=x, y3=z, z3=-y  
     // detector banks
-    const material1 = new THREE.MeshStandardMaterial({ color: 0xC0C0C0 });  // color of detector bank
-    let geometry = new Array(BankHorAngleMax.length*3);
-    let mesh = new Array(BankHorAngleMax.length*3);
-    for (let i=0;i<BankHorAngleMax.length;i++){
-        geometry[i] = new THREE.BoxGeometry(DetBankThickness, (BankWidth)*DetBankScale, BankWidth*DetBankScale);
-        mesh[i] = new THREE.Mesh(geometry[i], material1);
-        scene.add(mesh[i]);
-        mesh[i].rotation.y += (alpha[i]);       //rotation about the y axis.
-        mesh[i].position.x += DetBankScale*Porg_center[i][2];    // move along the x axis.
-        mesh[i].position.z -= DetBankScale*Porg_center[i][0];    // move along the z axis.    
+    let material_BL17side = new THREE.MeshStandardMaterial({ color: 0xC0C0C0});  // color of detector bank
+    if(DetBankSide=="BL17side"){
+        material_BL17side.color.set(0xf0C0C0);  
+    }
+    let geometry_BL17side = new Array(BankNumBL17side*3);
+    let mesh_BL17side = new Array(BankNumBL17side*3);
+    for (let i=0;i<BankNumBL17side;i++){
+        geometry_BL17side[i] = new THREE.BoxGeometry(DetBankThickness, (BankWidth)*DetBankScale, BankWidth*DetBankScale);
+        mesh_BL17side[i] = new THREE.Mesh(geometry_BL17side[i], material_BL17side);
+        scene.add(mesh_BL17side[i]);
+        mesh_BL17side[i].rotation.y += (alpha[i]);       //rotation about the y axis.
+        mesh_BL17side[i].position.x += DetBankScale*Porg_center[i][2];    // move along the x axis.
+        mesh_BL17side[i].position.z -= DetBankScale*Porg_center[i][0];    // move along the z axis.    
 
-        geometry[i+1] = new THREE.BoxGeometry(DetBankThickness, (BankWidth)*DetBankScale, BankWidth*DetBankScale);
-        mesh[i+1] = new THREE.Mesh(geometry[i+1], material1);
-        scene.add(mesh[i+1]);
-        mesh[i+1].rotation.y += (alpha[i]);       //rotation about the y axis.
-        mesh[i+1].position.x += DetBankScale*Porg_center[i][2];    // move along the x axis.
-        mesh[i+1].position.z -= DetBankScale*Porg_center[i][0];    // move along the z axis.    
-        mesh[i+1].position.y += DetBankScale*(BankWidth+Bank_VGap);    // move along the y axis. (vertical)       
+        geometry_BL17side[i+1] = new THREE.BoxGeometry(DetBankThickness, (BankWidth)*DetBankScale, BankWidth*DetBankScale);
+        mesh_BL17side[i+1] = new THREE.Mesh(geometry_BL17side[i+1], material_BL17side);
+        scene.add(mesh_BL17side[i+1]);
+        mesh_BL17side[i+1].rotation.y += (alpha[i]);       //rotation about the y axis.
+        mesh_BL17side[i+1].position.x += DetBankScale*Porg_center[i][2];    // move along the x axis.
+        mesh_BL17side[i+1].position.z -= DetBankScale*Porg_center[i][0];    // move along the z axis.    
+        mesh_BL17side[i+1].position.y += DetBankScale*(BankWidth+Bank_VGap);    // move along the y axis. (vertical)       
 
-        geometry[i+2] = new THREE.BoxGeometry(DetBankThickness, (BankWidth)*DetBankScale, BankWidth*DetBankScale);
-        mesh[i+2] = new THREE.Mesh(geometry[i+2], material1);
-        scene.add(mesh[i+2]);
-        mesh[i+2].rotation.y += (alpha[i]);       //rotation about the y axis.
-        mesh[i+2].position.x += DetBankScale*Porg_center[i][2];    // move along the x axis.
-        mesh[i+2].position.z -= DetBankScale*Porg_center[i][0];    // move along the z axis.    
-        mesh[i+2].position.y -= DetBankScale*(BankWidth+Bank_VGap);    // move along the y axis. (vertical)    
+        geometry_BL17side[i+2] = new THREE.BoxGeometry(DetBankThickness, (BankWidth)*DetBankScale, BankWidth*DetBankScale);
+        mesh_BL17side[i+2] = new THREE.Mesh(geometry_BL17side[i+2], material_BL17side);
+        scene.add(mesh_BL17side[i+2]);
+        mesh_BL17side[i+2].rotation.y += (alpha[i]);       //rotation about the y axis.
+        mesh_BL17side[i+2].position.x += DetBankScale*Porg_center[i][2];    // move along the x axis.
+        mesh_BL17side[i+2].position.z -= DetBankScale*Porg_center[i][0];    // move along the z axis.    
+        mesh_BL17side[i+2].position.y -= DetBankScale*(BankWidth+Bank_VGap);    // move along the y axis. (vertical)    
+    }
 
+    let material_BL19side = new THREE.MeshStandardMaterial({ color: 0xC0C0C0 });  // color of detector bank
+    if(DetBankSide=="BL19side"){
+        material_BL19side.color.set(0xf0C0C0);  
+    }
+    let geometry_BL19side = new Array(BankNumBL19side*3);
+    let mesh_BL19side = new Array(BankNumBL19side*3);
+    const numofst = BankNumBL17side - BankNumBL19side;
+    for (let i=0;i<BankNumBL19side;i++){
+        geometry_BL19side[i] = new THREE.BoxGeometry(DetBankThickness, (BankWidth)*DetBankScale, BankWidth*DetBankScale);
+        mesh_BL19side[i] = new THREE.Mesh(geometry_BL19side[i], material_BL19side);
+        scene.add(mesh_BL19side[i]);
+        mesh_BL19side[i].rotation.y -= (alpha[numofst+i]);       //rotation about the y axis.
+        mesh_BL19side[i].position.x += DetBankScale*Porg_center[numofst+i][2];    // move along the x axis.
+        mesh_BL19side[i].position.z += DetBankScale*Porg_center[numofst+i][0];    // move along the z axis.    
 
+        geometry_BL19side[i+1] = new THREE.BoxGeometry(DetBankThickness, (BankWidth)*DetBankScale, BankWidth*DetBankScale);
+        mesh_BL19side[i+1] = new THREE.Mesh(geometry_BL19side[i+1], material_BL19side);
+        scene.add(mesh_BL19side[i+1]);
+        mesh_BL19side[i+1].rotation.y -= (alpha[numofst+i]);       //rotation about the y axis.
+        mesh_BL19side[i+1].position.x += DetBankScale*Porg_center[numofst+i][2];    // move along the x axis.
+        mesh_BL19side[i+1].position.z += DetBankScale*Porg_center[numofst+i][0];    // move along the z axis.    
+        mesh_BL19side[i+1].position.y += DetBankScale*(BankWidth+Bank_VGap);    // move along the y axis. (vertical)       
+
+        geometry_BL19side[i+2] = new THREE.BoxGeometry(DetBankThickness, (BankWidth)*DetBankScale, BankWidth*DetBankScale);
+        mesh_BL19side[i+2] = new THREE.Mesh(geometry_BL19side[i+2], material_BL19side);
+        scene.add(mesh_BL17side[i+2]);
+        mesh_BL19side[i+2].rotation.y -= (alpha[numofst+i]);       //rotation about the y axis.
+        mesh_BL19side[i+2].position.x += DetBankScale*Porg_center[numofst+i][2];    // move along the x axis.
+        mesh_BL19side[i+2].position.z += DetBankScale*Porg_center[numofst+i][0];    // move along the z axis.    
+        mesh_BL19side[i+2].position.y -= DetBankScale*(BankWidth+Bank_VGap);    // move along the y axis. (vertical)    
     }
 
     // guide for the incident beam
+    const material1 = new THREE.MeshStandardMaterial({ color: 0xC0C0C0 });  // color of detector bank
     const geometry_guide = new THREE.BoxGeometry(2000,50,50);
     const mesh_guide = new THREE.Mesh(geometry_guide, material1);
     scene.add(mesh_guide);
