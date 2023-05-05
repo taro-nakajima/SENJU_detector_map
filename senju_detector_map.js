@@ -667,9 +667,9 @@ function draw_OriViewer(){
     //THREE.js coordinates (x3,y3,z3) 
     //transformation : x3=x, y3=z, z3=-y  
     // detector banks
-    let material_BL17side = new THREE.MeshStandardMaterial({ color: 0xC0C0C0});  // color of detector bank
+    let material_BL17side = new THREE.MeshStandardMaterial({ color: 0x808080});  // color of detector bank
     if(DetBankSide=="BL17side"){
-        material_BL17side.color.set(0xf0C0C0);  
+        material_BL17side.color.set(0xc08080);  
     }
     let geometry_BL17side = new Array(BankNumBL17side*3);
     let mesh_BL17side = new Array(BankNumBL17side*3);
@@ -698,9 +698,9 @@ function draw_OriViewer(){
         mesh_BL17side[i+2].position.y -= DetBankScale*(BankWidth+Bank_VGap);    // move along the y axis. (vertical)    
     }
 
-    let material_BL19side = new THREE.MeshStandardMaterial({ color: 0xC0C0C0 });  // color of detector bank
+    let material_BL19side = new THREE.MeshStandardMaterial({ color: 0x808080 });  // color of detector bank
     if(DetBankSide=="BL19side"){
-        material_BL19side.color.set(0xf0C0C0);  
+        material_BL19side.color.set(0xc08080);  
     }
     let geometry_BL19side = new Array(BankNumBL19side*3);
     let mesh_BL19side = new Array(BankNumBL19side*3);
@@ -731,7 +731,7 @@ function draw_OriViewer(){
     }
 
     // guide for the incident beam
-    const material1 = new THREE.MeshStandardMaterial({ color: 0xC0C0C0 });  // color of detector bank
+    const material1 = new THREE.MeshStandardMaterial({ color: 0x808080 });  // color of detector bank
     const geometry_guide = new THREE.BoxGeometry(2000,50,50);
     const mesh_guide = new THREE.Mesh(geometry_guide, material1);
     scene.add(mesh_guide);
